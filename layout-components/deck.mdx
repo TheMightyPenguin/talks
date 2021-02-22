@@ -1,0 +1,873 @@
+import LiveCode from "./components/LiveCode";
+import TwitterHandle from "./components/TwitterHandle";
+import BottomMessage from "./components/BottomMessage";
+import GlobalStyles from "./components/GlobalStyles";
+import SpacingScale from "./components/SpacingScale";
+import Img from "./components/Img";
+import IFrame from "./components/IFrame";
+import deckTheme from "./theme";
+
+export const theme = deckTheme;
+
+export const deFlag =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAADqUExURUdwTHljC39nAqYZFXFkM2BgYGJiYnNFK21oU1lZWZAAAGlpaRgXF3xlC49wAoNsDqKHFQAAAGdnZ3ljC35pDXVfBnpkCzs7OxQUFBwCABgYGP8lJCQkJAMDA9gCAvzSJPMaGRcWFtSpBB0dHd0HBwsLC+cPD/jOI/kgIPPHHtqwB9+3Cw8SEu4TE+zBGOa7EuMICaeICpN4DbeXEjg4OMSfDNSvGNgaFxAiIktLS/4TIEJCQiwsLOt+Fv3iJLsaGO4FC+fOD8IBAaYAADcPDfYHF/pNIogVFE8dHPyYJdpaCGolJKcqHLp0GHQcY+EAAAAbdFJOUwBd/qI79dUKI/2tbaPgrfOiraaEtJzLkbStqY+II5sAAAONSURBVFjD7dd5c5pgEAbw2qKYpiZtjqYdiAFBDhEheEUlVXN4NPb7f53u7vtyeSftH+2Mz0wyDiM/nl1wRt+9O+SQQ/7JiGIxjii+TRCE4+Ozs0Ihf0TJ5wtnx8fFV2EiEiDkwej1BoMWy6DXO8oXroTUxbZNggYRaLRaYShrmqqqdVXV5LA1GAw+RaeLV1frGsIyhMjgNRhSr1er15RqXZNlLYG+hYMjmFfA9WGK0TISIwQDomGZBEJKVRPoS1Vm88L+Cvx8mqTHapDBsgO6vlblMGzhwD08fcD2GYYZZC+IDkHx1Ckyzi8vO5kdrYXwaLVah6gULcPKYSzthqooVZmkUXijMPm/D5R2iEozIf/bezSU6FnTUqNFVCjLS86W0aJGiRM3ku8wqvbEQtz2RpGTWjYI8uzlZboYdruuO4Lo5fLDdDqDght3FC87Iu7C2ct02LUkSepLfcV1Dd/XfV33wesuZgn0PXPX2GRA0STQY7ogA2NZiqK4hgFKmaK7bvdDDH2cTp8yTxLk7k4DYzGMjQ2Q0R2moMey//A4ncEGsczT04yWoWQMDlnboYcyzjuCN3R1w3D7GMmS1kgKriiG9FUI4vuGMXIhCgWuviLtHO2BdB0pg1EWQpb0hxAvtK6RtRsqI7QsrWm0c0dLjZQ3N9JRMiLp7+1obSNpH6icuWsbdtR/fh6NYJXcedNdw2dUmkwm9yw/Id2y7u/aUXo0RtzP57YJGWOcsePUapXK/c+to0WNLPqoQIm5ffMDc2OadqPheYAgU3PG486vBDpZDFMQSs/KM6RvTSbzuckNCPSxGeTUKgAB5XWanxPotl2BgemB9Ef4eVMsrJE2WMjhjchxnCUIjsBF+B7vvYZNxs1yqBEV4pKz0oj0MYs5tlnMFYg1YovGc2rOCoTXwF6eB29tEGOaN+ZqId6IoIrjrGmEDDgI2Q0GrTpLUG0thJTnJZViCpuZFNtO73ojxBt5fDTbTIUscqI67Q1QSspW4m3wfjmdTrvdbDZvKc12u1LbNFo0W7wlToBAQAB5HyUIbuFYCgqamUbJkmgUMpA4PS19vbg8z1HOzy+/ltAKEugioJbJfUMJVgVEh9VA4TwnCEtffotC7qIUnMTQJZVEDEfsYNpt3gIMJDZ/wS/mcmLy+rJEEwe3PAERKWPvHwpiDkculU4xJb4KQXzjDx/4qs/yuhKHHHLI/5jfp+iBOPfDyIsAAAAASUVORK5CYII=";
+export const mxFlag =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAEgUExURUdwTGUKGa9eawc2J490dl5gW83NzVI5QAE6J4YeMHqBfYmLhxUuJAE1JE8SGnmDf1qEd2ARHM7OzsvLy2CIe3uHg4SEhMvLy6thbWQRHqthba5lcMzMzMzMzDBaTAc1J18PG8rGxgEvIMvLy1qBdHxpbKqqqqgOJ/////z8/KwTKwNZPfr6+rcdNhJqTv7+/gphRbIXMQddQg9lSRZuUsQmQL4iPPj3+ANPN60hOMYmOwFCLfTz8pUhM1GPehxxVu28xAJnSd3c1evt7Obl4Ed+bLu+udfRsowPI3UUJJJrT8K2mKtCU5iVljhyX6OJaKiura2sf7IvRIBcQrJNXm6goZoaL25LNde5hs6gZr86UNm8wa3W3Vw9LYfFzUOQls/bEpwAAAAndFJOUwD8/uYoFvsJrKJT+Db+dILxWSXY3KrcR+erjL6FtZrE0GdRo7/itWP596QAAANqSURBVFjD7ddpU9pAGAdwWwlRULzqXc+2Q4KBCOEsUTSJiSRK5IZy+P2/RZ/dDSERCy594wv+zCDMwG+efWSvpaVFFlnkU4ZlAm5Ydi5ie3v/4uLo+PjgK8nBwfHRUShAhTH7F99PdoJBpQdAo9F4ctIA7vgoMP4cO7UOYiiapqm9P5BarVYgqdWeQF0dfZ09PQ0F3ukGMn5gAxBVlWVZvMtkMtl4PJmMxaLRaCuKrJsxtFKpbP7c3QgFAgzLsgwTCIU2dk92dnY8Rg6Fv8tmsgSKkiTjBS+UT1QeHh42Nze/4cCLh6ZrYELAz+IYIhVFC36omJdKpUoFaU4qt6rqKiSCIBAoO4ImKyrmr1IpSUqkS+DBo1RK3+ZkZ0DCONzd70xmBgRJpa6vQUsg7x5DfofnR1B8BMXeg1IIAgmodBqgHIaI4GQCik6DkFPCEHZchRd9UGx6RZIP8pQjwsMDjUr6ACQQyEFIJqBpFSVcCDcIGZxICV37IIEUJHIoIvmDoAxtRQQSOdWyeoTxQDHKingOHLPdtuUxlJ0D4gVZMW273h7YbytKUkGibHS6dt2s1+sK7dASPohXOoY9qJtmW6eD7v0VyZqmdM2BXQVIVWl6JPkgGJmlWFCPGjSDVYOmRz4I/mmq0e2a7UHbCmqGTDM0ydMjUbOUO6XT6UC3TcWw5v4dcUpVvm32+n3LfmnKeGTz9YgXDKXfbL6+vjabQ8WgmSJvesQZVV4b9jvhoarZGi2U8DbbqCr9Yber64b2ZopQVZTjhapl6C+6VSVTbf5lBH7ZVUu3NIGjXY+kydnP5QSOm1jYKOcaXo8wM7n4R6lXSPG9xX/mduSDxov/m30tOXuDnFz8UQTy5GzZ8Rlb9gRE9jX4vhsRoOzMvd+7YzuQ7wThQh+syLPTeqSc4BxrwCkUnNNRazaU9pxGcpiBt3Bg6hUKLcjjKK1YYdohIuFCmEKEpgSDuq4/l1G+jFIuP7ZuPgJBVA0bLy/Pz+Fw+Nf54WoksgWJRCKH59gqe6D1Yj7v7/Y9HP0IQYy9PTishgLegzS8ZNZAKx96oPX1omORPklXFYcAgxD/PMxvbbk6c7myjC2kkRQlNBJkoCoorgnMZWTlbNnN2dnpxgYug53j5gIXnzUShhl14X/uUYur5CKLfOb8Ba339RtXLD6UAAAAAElFTkSuQmCC";
+export const veFlag =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAE1UExURUdwTBQ2agIfUb6vYMe3dWQRGmMUHGU3McO0b28OGqKLI2oTHsq4a8a1bYUgK4x1DMa2b8e2cWcUHWQSHL2sYmANFsq5crOgTL6uZWoYIVoJEnobJal2UdIzRCZWo9KvFfrWOPXSNwc3hQU0gAEwfRpJmQs7ihREk9q2GRA/jcwuQOG9IbQXKbodLqoPICJRn64TJMcnOvLOLu3JLOjEJsy1SsAjNJUiMqskNdKzKYcQHefLTNjCY+EtOv7gJ3saJWkMF5kPHxRWqglCqBpBhQc+lt6/NbueHL0vQezCCxg6djliqMEPHQAjX88dKgMoigErcmiGvFF0s7ehP6OHDfz9/YCZyJis0GtFeTxOkbPD3po7X93k8I2Xb3ElTzY6dcfR5EArW3VxUFJuimt/f1JdZ5qRU9xC0sAAAABBdFJOUwCirf4UXDYLKrCk8PTYoq2DUt6C6ZywncLQw61////////////////////////////////////////////////+X+udrQAABEhJREFUWMPt12tX2lgUBmA7gtGKU0StzswiEOAkhIsB5E4ZxBKKxIFJKFAo9dba//8TZu+TkxAQEV3zoR94kQ9EeNa7N4e1YGNjnXXW+SXjcrm2WVyuVxLb+/te7/uTPc8mzeHhybF3f/ulhvf9nsfzgSZnppfLIXfinVpLKnIOo/KhAmli4qVAiQbBY8568vHxooYuZtAWSFSCQiVzdpaNx6PRaICmVGqWPr21obe9njkv7I/DbdJl7FmzACFUBCEYFAR0AIpbUCAad0LvPrN5Dw/3MB6PZ9PuEQQB7gJNhklPQp/Mce1UchXWYy42ZM02D8ElXB/dZLPSPMNkMhn2cmwUDDpms6HoYwivQuLNeBbCJIux/szZHEtaCFEHwiCLccQJmVL8qUZxU5pOxoSpNNMouqjRo0KmI8w1glzS0FLLRrM3JGRmBwv+jck08TT3eqVSIApcdmEjNti0kOAggrnNb99+fB8RSRa73XA43L55uO/FLwNPj3ZmS6xFBYzvGn/xEaKqqiyGQuFwpBvpdruNh3snBIpjMqwEDEUEMH5oChI8zysKIZLEIEg4JHYjb2zot7v7XsDcYPYym81kaA2hmYNJaA1tAIZGlAWQ3Gg7oH/+7bYf7n/2ejl6tnO9n7gMrHGh6gPNuO0PCT82NOV5CMftdkNiAyJJKk7ykShEUfRJX9cmfU0b98c8WQEKw8VQSBRFWKYqEYkAI+mEGP2Jogx0g4z7hmoQSXkOioRNSJZlCUIgijEZappuaDxU42FCbaxrZAUoTBtRCBmJH+NqCIFF4xuGj8e89LJGWIio+nBA0GBRB5OBSF4KSeKA1yR+JgavGJpIVhuNQRI/7N/CyVGcEGzt9taQV2vEdiSpg/5QnHVAGsB7KL+oERF1XSePIGM8JAihtApEZFGXVXAUfoa60PCsqypCGHjFM8uGAz2kG7KcCwzPj0Zfvnz9WsBcX1/f3bRFVV52jmQCny5VUeho1NBGAPj91Wq1g7liSRWub2Yg+IREnDuSB0NdUhRaA0u0kKhW/f5YLJ3OJ5PJRCJ1CklcdZKF321o5/yuDch0NJXwKhjKjIGJMQgcCqUSyWTRAdVPTwswcaPBPmmj0Q3uYsZgUpo1SqGUAqjobFSup3DiRKJI00p3Oo8I1gic2UZzEF5LJK+uOmbSGJjjFRBUTQAFM+fzeca8FqJSMr9Eiq00mulMG6UXQ+BYzFOQQ8qzRv4pBY9arRa8FYVCvVwvY+r1eiqxHLKWHUPAj0ILhUKhBjmfplyGawuhxLSRuSTbAGF31/fHztGBm+bg4OjP3fNzuOw82dDS3JLVKN/CW7HIDBQO3FtbHDf75XnLveOr/WVDR7Qkjkwx81Tak/hMYtGXcLhtcG63/T/OfeTDiWvlWpmlZk6CBrbglnyln3vohpF9vl0aH10FGgueuUI4bouF4/6n31Lc+ufkOuv8qvkPplnXMVf/tNEAAAAASUVORK5CYII=";
+
+export const CountryFlag = ({ src }) => (
+  <img
+    src={src}
+    style={{
+      display: "inline-block",
+      width: "36px",
+      height: "36px",
+      position: "relative",
+      top: "10px",
+    }}
+  />
+);
+
+# Layout Components
+
+### A whole new world :sparkles:
+
+<Head>
+  <link
+    rel="stylesheet"
+    href="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/prism-overrides.css"
+  />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+</Head>
+
+<TwitterHandle />
+
+---
+
+<SplitRight style={{ textAlign: 'left', width: '90%' }}>
+
+<Img
+  src="https://pbs.twimg.com/profile_images/1251373665930874882/fKva6mDo_400x400.jpg"
+  alt="twitter mock"
+  height={2.6 / 4}
+/>
+
+<div>
+
+- Senior Software Engineer @medwing <CountryFlag src={deFlag} />
+- <CountryFlag src={veFlag} /> ---> <CountryFlag src={mxFlag} />
+- @MightyPenguinV
+- https://mightypenguin.dev
+
+</div>
+
+</SplitRight>
+
+---
+
+<IFrame
+  src="https://mightypenguin.dev/igloo/nodeParticles"
+  width="90%"
+  height="75%"
+/>
+
+<TwitterHandle />
+
+---
+
+# Layout Components
+
+### A whole new world :sparkles:
+
+---
+
+#### Global search for:
+
+```
+display: flex;
+
+// or
+
+display: grid;
+```
+
+---
+
+## Layout Components
+
+1. What is Layout?
+2. What are the problems?
+3. What are these components?
+4. Benefits
+5. Where to look for inspiration
+6. QA
+
+---
+
+## Layout
+
+---
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/twitter_mock.jpg"
+  alt="twitter mock"
+  height={3 / 4}
+/>
+
+<BottomMessage message="Made by @davecave" />
+
+---
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/twitter_mock_areas.jpg"
+  alt="twitter mock"
+  height={3 / 4}
+/>
+
+---
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/twitter_mock_vertical_list.jpg"
+  alt="twitter mock"
+  height={3 / 4}
+/>
+
+---
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/twitter_mock_tweet.jpg"
+  alt="twitter mock"
+  height={3 / 4}
+/>
+
+---
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/twitter_mock_tweet_2.jpg"
+  alt="twitter mock"
+  height={3 / 4}
+/>
+
+---
+
+## Layout Patterns
+
+- A vertical list
+- A horizontal list
+- Columns
+- ...
+
+---
+
+### `spacings = marging + padding`
+
+---
+
+## The problems
+
+---
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock.svg"
+  alt="twitter mock"
+  width={1 / 2}
+/>
+
+---
+
+<Split style={{ textAlign: 'left', width: '90%' }}>
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock_close.svg"
+  alt="twitter mock"
+  width="400px"
+/>
+
+```html
+<div class="button-list">
+  <button>Cancel</button>
+  <button>Done</button>
+</div>
+```
+
+</Split>
+
+---
+
+<Split style={{ textAlign: 'left', width: '90%' }}>
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock_space.svg"
+  alt="twitter mock"
+  width="400px"
+/>
+
+```html
+<div class="button-list">
+  <button>Cancel</button>
+  <button>Done</button>
+</div>
+
+<style>
+  button {
+    margin-right: 16px;
+  }
+</style>
+```
+
+</Split>
+
+---
+
+#### Problem: Who owns spacing?
+
+---
+
+<Split style={{ textAlign: 'left' ,width:  '90%'}}>
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock_space.svg"
+  alt="twitter mock"
+  width="400px"
+/>
+
+```html
+<div class="button-list">
+  <button>Cancel</button>
+  <button>Done</button>
+</div>
+
+<style>
+  .button-list button {
+    margin-right: 16px;
+  }
+</style>
+```
+
+</Split>
+
+---
+
+<Split style={{ textAlign: 'left' ,width:  '90%'}}>
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock_highlight.svg"
+  alt="twitter mock"
+  width="400px"
+/>
+
+```html
+<div class="button-list">
+  <button>Cancel</button>
+  <button>Done</button>
+</div>
+
+<style>
+  .button-list button {
+    margin-right: 16px;
+  }
+</style>
+```
+
+</Split>
+
+---
+
+<Split style={{ textAlign: 'left' ,width:  '90%'}}>
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock_highlight_all.svg"
+  alt="twitter mock"
+  width="400px"
+/>
+
+```html
+<div class="button-list">
+  <button>Cancel</button>
+  <button>Done</button>
+</div>
+
+<style>
+  .button-list button {
+    margin-right: 16px;
+  }
+</style>
+```
+
+</Split>
+
+---
+
+<Split style={{ textAlign: 'left' ,width:  '90%'}}>
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock_highlight.svg"
+  alt="twitter mock"
+  width="400px"
+/>
+
+```html
+<div class="button-list">
+  <button>Cancel</button>
+  <button>Done</button>
+</div>
+
+<style>
+  .button-list button:not(:last-child) {
+    margin-right: 16px;
+  }
+</style>
+```
+
+</Split>
+
+---
+
+<Split style={{ textAlign: 'left' ,width:  '90%'}}>
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock_other.svg"
+  alt="twitter mock"
+  width={3 / 4}
+/>
+
+```html
+<div class="button-list">
+  <button>Cancel</button>
+  <button>Done</button>
+  <button>Done</button>
+</div>
+
+<style>
+  .button-list button:not(:last-child) {
+    margin-right: 16px;
+  }
+</style>
+```
+
+</Split>
+
+---
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/image_list.jpg"
+  alt="twitter mock"
+  width={3 / 4}
+/>
+
+---
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/card_list.jpg"
+  alt="twitter mock"
+  width={3 / 4}
+/>
+
+---
+
+<Split style={{ textAlign: 'left' ,width:  '90%'}}>
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock_highlight.svg"
+  alt="twitter mock"
+  width="400px"
+/>
+
+```html
+<div class="button-list">
+  <button>Cancel</button>
+  <button>Done</button>
+</div>
+
+<style>
+  .button-list button:not(:last-child) {
+    margin-right: 16px;
+  }
+</style>
+```
+
+</Split>
+
+---
+
+#### Problem: Reusability
+
+---
+
+<Split style={{ textAlign: 'left' ,width:  '90%'}}>
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock_space.svg"
+  alt="twitter mock"
+  width={3 / 4}
+/>
+
+```html
+<div class="button-list">
+  <button>Cancel</button>
+  <button>Done</button>
+</div>
+
+<style>
+  .button-list button:not(:last-child) {
+  }
+  .some-container button:not(:last-child) {
+  }
+  .some-wrapper button:not(:last-child) {
+  }
+  /* ... */
+</style>
+```
+
+</Split>
+
+---
+
+<Split style={{ textAlign: 'left' ,width:  '90%'}}>
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock_space.svg"
+  alt="twitter mock"
+  width={3 / 4}
+/>
+
+```html
+<div class="button-list">
+  <button>Cancel</button>
+  <button>Done</button>
+</div>
+
+<style>
+  .some-container button:not(:last-child) {
+    margin-right: 16px;
+  }
+  .some-wrapper button:not(:last-child) {
+    margin-right: 8px;
+  }
+  /* ... */
+</style>
+```
+
+</Split>
+
+---
+
+<SpacingScale />
+
+---
+
+<Split style={{ textAlign: 'left' ,width:  '90%'}}>
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock_space.svg"
+  alt="twitter mock"
+  width={3 / 4}
+/>
+
+```html
+<div class="button-list">
+  <button>Cancel</button>
+  <button>Done</button>
+</div>
+
+<style>
+  .some-container button:not(:last-child) {
+    margin-right: 16px;
+  }
+  .some-wrapper button:not(:last-child) {
+    margin-right: 8px;
+  }
+  /* ... */
+</style>
+```
+
+</Split>
+
+---
+
+#### Problem: Consistency
+
+---
+
+#### Problem: CSS Pitfalls
+
+- Margin collapsing
+- Browser compatibility
+- ...
+
+---
+
+## Problems
+
+- Who owns spacing?
+- Reusability
+- Consistency
+- CSS Pitfalls
+
+---
+
+## Problems
+
+- Who owns spacing?
+- Reusability
+- Consistency
+- CSS Pitfalls
+- ...
+
+---
+
+### Recap
+
+1. ~~What is Layout?~~
+2. ~~What are the problems?~~
+3. **What are these components?**
+4. Benefits
+5. Where to look for inspiration
+6. QA
+
+---
+
+# Layout Components
+
+---
+
+> A component that implements a layout pattern.
+
+---
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock.svg"
+  alt="twitter mock"
+  width={1 / 2}
+/>
+
+---
+
+<LiveCode
+  title="Implementing a Horizontal List"
+  size="medium"
+  snippet="implementingLayoutComponents.js"
+/>
+
+---
+
+<LiveCode
+  title="Implementing a Horizontal List"
+  size="medium"
+  snippet="implementingLayoutComponents2.js"
+/>
+
+---
+
+<LiveCode
+  title="Implementing a Horizontal List"
+  size="medium"
+  snippet="implementingLayoutComponents3.js"
+/>
+
+---
+
+<LiveCode
+  title="Implementing a Horizontal List"
+  size="medium"
+  snippet="implementingLayoutComponents4.js"
+/>
+
+---
+
+<LiveCode
+  title="Implementing a Horizontal List"
+  size="medium"
+  snippet="implementingLayoutComponents5.js"
+/>
+
+---
+
+<LiveCode
+  title="Implementing a Horizontal List"
+  size="medium"
+  snippet="implementingLayoutComponents6.js"
+/>
+
+---
+
+<SpacingScale />
+
+---
+
+<LiveCode
+  title="Implementing a Horizontal List"
+  size="medium"
+  snippet="implementingLayoutComponents6.js"
+/>
+
+---
+
+<LiveCode
+  title="Implementing a Horizontal List"
+  size="medium"
+  snippet="implementingLayoutComponents7.js"
+/>
+
+---
+
+<LiveCode
+  title="Implementing a Horizontal List"
+  size="medium"
+  snippet="implementingLayoutComponents8.js"
+/>
+
+---
+
+<LiveCode
+  title="Implementing a Horizontal List"
+  size="medium"
+  snippet="implementingLayoutComponentsFinal.js"
+/>
+
+---
+
+## What if I don't use React?
+
+---
+
+<Split style={{ textAlign: 'left', width: '90%' }}>
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/buttons_mock_close.svg"
+  alt="twitter mock"
+  width="400px"
+/>
+
+```html
+<style>
+  .h-list {
+    display: flex;
+  }
+  .h-list-small > *:not(:last-child) {
+    margin-right: 8px;
+  }
+  .h-list-medium > *:not(:last-child) {
+  }
+  .h-list-large > *:not(:last-child) {
+  }
+</style>
+
+<div class="h-list h-list-small">
+  <button>Cancel</button>
+  <button>Done</button>
+</div>
+```
+
+</Split>
+
+---
+
+### What other components can we have?
+
+- HorizontalList
+- VerticalList
+- ...
+
+---
+
+### UX and Engineering collaboration is key
+
+---
+
+## Is this new?
+
+---
+
+### What is not a Layout Component?
+
+- CSS flex
+- CSS grid
+
+---
+
+# Benefits
+
+---
+
+### Reusable layout componets
+
+- `<HorizontalList space="small" />`
+- `<VerticalList space="large" />`
+- ...
+
+---
+
+### Consistent spacing in our apps
+
+```jsx
+const spacingScale = {
+  small: 8,
+  medium: 16,
+  large: 32
+};
+
+<HorizontalList space="small">
+
+// we don't allow this
+<HorizontalList space="13px">
+```
+
+---
+
+### Lowers CSS entry barrier to build UI's
+
+```jsx
+<VerticalList space="medium">
+  <Text>Title</Title>
+  <HorizontalList space="small">
+    <Button>Cancel</Button>
+    <Button>Done</Button>
+  </HorizontalList>
+</VerticalList>
+```
+
+---
+
+### Increases developer experience and productivity
+
+<Img
+  src="https://penguin-talk-images.s3-us-west-2.amazonaws.com/layout-components/twitter_mock.jpg"
+  alt="twitter mock"
+  height={3 / 4}
+/>
+
+---
+
+### Better UX / Engineering collaboration
+
+- Engineer: What is the spacing for this VerticalList?
+
+- UX Designer: Oh that's is using large spacing
+
+---
+
+### Benefits
+
+- Reusable layout component
+- Consistent spacing in our apps
+- Better UX / Engineering collaboration
+- Lowers CSS entry barrier to build UI's
+- Increases developer experience and productivity
+
+---
+
+### Let's revaluate the problems we had
+
+---
+
+## Problems
+
+- Who owns spacing?
+- Reusability
+- Consistency
+- CSS Pitfalls
+- ...
+
+---
+
+### Recap
+
+1. ~~What is Layout?~~
+2. ~~What are the problems?~~
+3. ~~What are these components?~~
+4. ~~Benefits~~
+5. Where to look for inspiration
+6. QA
+
+---
+
+## Where to look for inspiration
+
+---
+
+#### https://polaris.shopify.com/components/structure/layout/
+
+---
+
+<IFrame
+  src="https://www.carbondesignsystem.com/guidelines/2x-grid/overview/"
+  width="90%"
+  height="80%"
+/>
+
+---
+
+<IFrame
+  src="https://material.io/design/layout/understanding-layout.html"
+  width="90%"
+  height="80%"
+/>
+
+---
+
+<IFrame
+  src="https://atlassian.design/foundations/grid"
+  width="90%"
+  height="80%"
+/>
+
+---
+
+<IFrame
+  src="https://seek-oss.github.io/braid-design-system/foundations/layout"
+  width="90%"
+  height="80%"
+/>
+
+---
+
+<IFrame src="https://every-layout.dev/" width="90%" height="80%" />
+
+---
+
+### Resources
+
+- https://adele.uxpin.com/
+- https://medium.com/eightshapes-llc/space-in-design-systems-188bcbae0d62
+- https://www.designsystems.com/space-grids-and-layouts/
+- https://atomicdesign.bradfrost.com/
+- https://www.youtube.com/watch?v=xxbc3wAztl0
+- Mocks by @davecave: https://www.figma.com/community/file/887892609124245416
+
+<Notes>
+
+- https://designsystemsrepo.com/design-systems/
+- https://seek-oss.github.io/braid-design-system/foundations/layout
+- https://www.carbondesignsystem.com/guidelines/2x-grid/overview/
+- https://polaris.shopify.com/components/structure/layout
+
+</Notes>
+
+---
+
+### Takeaways
+
+Layout components help us to:
+
+- Increase code reusability and reduce the amount of CSS we write
+- Be more productive when implementing layouts
+- Collaborate better with UX and Engineering
+- Increase visual consistency in our application
+
+---
+
+#### Thanks
+
+#### @MightyPenguinV
+
+---
+
+# QA
+
+#### @MightyPenguinV
